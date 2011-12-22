@@ -1,0 +1,37 @@
+script
+  function saveActivity(){
+    $.post("/activity/add", { activity: document.getElementById('activity').value } );
+    document.getElementById('activity').value = "";
+  }
+  $(document).ready(function(){
+    $("#grid").kendoGrid({
+      columns: [
+        {field:"date", title:"date"},
+        {field:"activity", title:"activity"},
+        {field:"hours", title:"time spent (h)"}
+      ],
+      dataSource: {
+        transport: {
+          read: {
+            url: '/activities/list',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json'
+          }
+        }
+      },
+      sortable: {
+        mode: "single",
+        allowUnsort: false
+      }
+    });
+  });
+script(src="/javascripts/kendo.all.min.js")
+img(src='/images/sablier.png') 
+h1 Add activity
+label 
+  |What did you work on?:
+  input#activity
+  button(onclick="saveActivity();") add
+h1 your activities
+div#grid
