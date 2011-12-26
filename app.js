@@ -9,7 +9,7 @@ var express = require('express')
 var app = module.exports = express.createServer();
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://username:password@staff.mongohq.com:10079/sablier');
+mongoose.connect('mongodb://bushibytes:w00fw00f@staff.mongohq.com:10079/sablier');
 
 // Configuration
 
@@ -35,6 +35,7 @@ app.configure('production', function(){
 app.get('/', routes.index);
 app.get('/activity', routes.activity);
 app.get('/activities', routes.activity);
+app.get('/authenticate', routes.authenticate);
 
 app.post('/activity/add', routes.addActivity);
 app.post('/activities/add', routes.addActivity);

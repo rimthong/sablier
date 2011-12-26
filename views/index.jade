@@ -1,2 +1,6 @@
-h1= title
-p Welcome to #{title}
+h1= Authentication requird
+p Please Authenticate
+form (method="get", action="/authenticate")
+p Login using OpenID
+input (name="openid_identifier", value="http://www.google.com/accounts/o8/id")
+input (type="submit", value="Login")
