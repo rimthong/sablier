@@ -9,7 +9,7 @@ var express = require('express')
 var app = module.exports = express.createServer();
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://name:password@staff.mongohq.com:10018/app2225152');
+mongoose.connect('mongodb://heroku:qO3GLz4b3S92wWE@staff.mongohq.com:10018/app2225152');
 
 // Configuration
 
@@ -32,16 +32,16 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', routes.index);
-app.get('/activity', routes.activity);
-app.get('/activities', routes.activity);
+app.get('/', routes.activity);
 app.get('/authenticate', routes.authenticate);
 
-app.post('/activity/add', routes.addActivity);
-app.post('/activities/add', routes.addActivity);
+app.post('/activity', routes.addActivity);
+app.post('/activities', routes.addActivity);
+app.delete('/activity', routes.deleteActivity);
+app.delete('/activities', routes.deleteActivity);
 
-app.get('/activity/list', routes.listActivities);
-app.get('/activities/list', routes.listActivities);
+app.get('/activity', routes.listActivities);
+app.get('/activities', routes.listActivities);
 
 app.listen(process.env.PORT || 3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

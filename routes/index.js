@@ -25,21 +25,17 @@ var extensions = [new openid.UserInterface(),
                         "http://axschema.org/namePerson/last": "required"
                       })];
 var relyingParty = new openid.RelyingParty(
-    'http://sablier.herokuapp.com/activity', // Verification URL (yours)
+    'http://sablier.herokuapp.com/', // Verification URL (yours)
     null, // Realm (optional, specifies realm for OpenID authentication)
     false, // Use stateless verification
     false, // Strict mode
     extensions); // List of extensions to enable and include
 
-exports.index = function(req, res){
-  res.render('login', { title: 'Please identify yourself' });
-};
-
 exports.activity = function(req, res){
   relyingParty.verifyAssertion(req, function(error, result){
     if(error){
       console.log('auth failed activity, error:'+JSON.stringify(error));
-      res.render('login', {title: 'Authentication Failed'});
+      res.render('login', {title: 'Please Provide Authentication'});
     } else {
       user = result;
       console.log('auth achieved activity, result:'+JSON.stringify(result));
@@ -74,6 +70,9 @@ exports.authenticate = function(req,res){
     }
   });
 };
+exports.deleteActivity = function(req,res){
+  res.send(ok);
+}
 
 exports.addActivity = function(req,res){
   //Parse string
