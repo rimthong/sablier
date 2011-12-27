@@ -43,5 +43,5 @@ app.post('/activities/add', routes.addActivity);
 app.get('/activity/list', routes.listActivities);
 app.get('/activities/list', routes.listActivities);
 
-app.listen(56491);
+app.listen(PORT);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
