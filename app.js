@@ -9,7 +9,7 @@ var express = require('express')
 var app = module.exports = express.createServer();
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://bushibytes:w00fw00f@staff.mongohq.com:10079/sablier');
+mongoose.connect('mongodb://heroku:qO3GLz4b3S92wWE@staff.mongohq.com:10018/app2225152');
 
 // Configuration
 
