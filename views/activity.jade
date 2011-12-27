@@ -1,6 +1,6 @@
 script
   function saveActivity(){
-    $.post("/activity/add", { activity: document.getElementById('activity').value } );
+    $.post("/activity", { activity: document.getElementById('activity').value } );
     document.getElementById('activity').value = "";
     $("#grid").data("kendoGrid").dataSource.read(); 
     return false;
@@ -15,7 +15,7 @@ script
       dataSource: {
         transport: {
           read: {
-            url: '/activities/list',
+            url: '/activity',
             contentType: 'application/json; charset=utf-8',
             type: 'GET',
             dataType: 'json'
