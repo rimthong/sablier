@@ -2,6 +2,8 @@ script
   function saveActivity(){
     $.post("/activity/add", { activity: document.getElementById('activity').value } );
     document.getElementById('activity').value = "";
+    $("#grid").data("kendoGrid").dataSource.read(); 
+    return false;
   }
   $(document).ready(function(){
     $("#grid").kendoGrid({
@@ -27,11 +29,10 @@ script
     });
   });
 script(src="/javascripts/kendo.all.min.js")
-img(src='/images/sablier.png') 
 h1 Add activity
-label 
-  |What did you work on?:
-  input#activity
-  button(onclick="saveActivity();") add
-h1 your activities
+form(onsubmit="return saveActivity();")
+  label
+    |What did you work on?:
+    input#activity(size=42)
+h1 Log
 div#grid

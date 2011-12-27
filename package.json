@@ -5,5 +5,7 @@
   , "dependencies": {
       "express": "2.5.1"
     , "jade": ">= 0.0.1"
+    , "mongoose": "2.4.8"
+    , "openid" : "0.3.2"
   }
 }

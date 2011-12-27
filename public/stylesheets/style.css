@@ -1,8 +1,27 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 10px;
+  font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #1B1C1F;
 }
 
 a {
   color: #00B7FF;
+}
+div#header{
+  color:#EEE;
+  font: 14px "Monaco";
+  text-align: right;
+  margin-right: 25px;
+}
+
+div#content{
+  margin-left: 200px;
+  margin-right: 200px;
+  padding:45px;
+  background: #CCC;
+}
+div#footer{
+  font-size:8pt;
+  color:#CCC;
+  text-align:center;
 }
