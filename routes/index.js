@@ -50,7 +50,7 @@ exports.listActivities = function(req,res){
     res.render('login', {title: 'Authentication Failed'});
   } else {
     console.log('auth list activities achieved, result:'+JSON.stringify(user));
-    Activity.find({user:user.email},function(err, activities){
+    Activity.find({user:user.email}).sort('date',-1).execFind(function(err, activities){
       res.send(activities);
     });
   }
