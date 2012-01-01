@@ -27,6 +27,26 @@ script
         allowUnsort: false
       }
     });
+
+
+    $("#customGrid").kendoGrid({
+      dataSource: {
+        transport: {
+          read: {
+            url: '/activity',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json'
+          }
+        }
+      },
+      rowTemplate: kendo.template($("#rowTemplate").html()),
+      sortable: {
+        mode: "single",
+        allowUnsort: false
+      }
+    });
+
   });
 script(src="/javascripts/kendo.all.min.js")
 h1 Add activity
@@ -36,3 +56,20 @@ form(onsubmit="return saveActivity();")
     input#activity(size=42)
 h1 Log
 div#grid
+table#customGrid
+  thead
+    tr
+      th Date
+      th Activity
+      th Hours
+      th
+  tbody
+    tr
+      td(colspan=3)
+script#rowTemplate(type="text/x-kendo-tmpl")
+  <tr>
+    <td> ${date} </td>
+    <td> ${activity} </td>
+    <td> ${hours} </td>
+    <td> ${_id} </td>
+  </tr>
