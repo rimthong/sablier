@@ -5,13 +5,19 @@ script
     $("#grid").data("kendoGrid").dataSource.read(); 
     return false;
   }
-  $(document).ready(function(){
-/*
+  function removeActivity(docid){
+    $.post("/activity", { _method: 'delete', activity: docid});
+    window.location.reload()
+    $("#grid").data("kendoGrid").dataSource.read(); 
+  }
+
+  function readyGrid(){
     $("#grid").kendoGrid({
       columns: [
         {field:"date", title:"date"},
         {field:"activity", title:"activity"},
-        {field:"hours", title:"time spent (h)"}
+        {field:"hours", title:"time spent (h)"},
+        {field:"_id", title:"operation"}
       ],
       dataSource: {
         transport: {
@@ -19,36 +25,22 @@ script
             url: '/activity',
             contentType: 'application/json; charset=utf-8',
             type: 'GET',
-            dataType: 'json'
-          }
-        }
-      },
-      sortable: {
-        mode: "single",
-        allowUnsort: false
-      }
-    });
-*/
-
-    $("#customGrid").kendoGrid({
-      dataSource: {
-        transport: {
-          read: {
-            url: '/activity',
-            contentType: 'application/json; charset=utf-8',
-            type: 'GET',
+            cache: false,
             dataType: 'json'
           }
         }
       },
       rowTemplate: kendo.template($("#rowTemplate").html()),
-      sortable: {
-        mode: "single",
-        allowUnsort: false
-      }
+      altRowTemplate: kendo.template($("#altRowTemplate").html()),
+      sortable: true
     });
 
+  }
+
+  $(document).ready(function(){
+    readyGrid();
   });
+
 script(src="/javascripts/kendo.all.min.js")
 h1 Add activity
 form(onsubmit="return saveActivity();")
@@ -56,21 +48,21 @@ form(onsubmit="return saveActivity();")
     |What did you work on?:
     input#activity(size=42)
 h1 Log
-div#grid
-table#customGrid
-  thead
-    tr
-      th Date
-      th Activity
-      th Hours
-      th
+table#grid
   tbody
     tr
       td(colspan=3)
 script#rowTemplate(type="text/x-kendo-tmpl")
-  <tr>
-    <td> ${date} </td>
-    <td> ${activity} </td>
-    <td> ${hours} </td>
-    <td> ${_id} </td>
-  </tr>
+  tr
+    td ${date}
+    td ${activity}
+    td ${hours}
+    td
+      button(onclick="removeActivity(\"${_id}\");") remove
+script#altRowTemplate(type="text/x-kendo-tmpl")
+  tr(class="k-alt")
+    td ${date}
+    td ${activity}
+    td ${hours}
+    td
+      button(onclick="removeActivity(\"${_id}\");") remove

@@ -70,9 +70,19 @@ exports.authenticate = function(req,res){
     }
   });
 };
+
 exports.deleteActivity = function(req,res){
-  res.send(ok);
-}
+  if(!user){
+    console.log('add activity auth failed, error:'+JSON.stringify(error));
+    res.render('login', {title: 'Authentication Failed'});
+  } else {
+    Activity.findOne({_id:req.body.activity},function(err, activity) {
+      console.log('deleteing activity:'+JSON.stringify(activity))
+      activity.remove();
+    });
+    res.send('ok');
+  }
+};
 
 exports.addActivity = function(req,res){
   //Parse string

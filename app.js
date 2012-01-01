@@ -37,6 +37,7 @@ app.get('/authenticate', routes.authenticate);
 
 app.post('/activity', routes.addActivity);
 app.post('/activities', routes.addActivity);
+
 app.delete('/activity', routes.deleteActivity);
 app.delete('/activities', routes.deleteActivity);
 
