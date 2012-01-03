@@ -7,8 +7,9 @@ script
   }
   function removeActivity(docid){
     $.post("/activity", { _method: 'delete', activity: docid});
-    window.location.reload()
+    $("#grid").data("kendoGrid").refresh();
     $("#grid").data("kendoGrid").dataSource.read(); 
+    $("#grid").data("kendoGrid").refresh();
   }
 
   function readyGrid(){

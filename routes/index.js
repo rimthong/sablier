@@ -25,7 +25,7 @@ var extensions = [new openid.UserInterface(),
                         "http://axschema.org/namePerson/last": "required"
                       })];
 var relyingParty = new openid.RelyingParty(
-    'http://sablier.herokuapp.com/', // Verification URL (yours)
+    'http://localhost:3000/', // Verification URL (yours)
     null, // Realm (optional, specifies realm for OpenID authentication)
     false, // Use stateless verification
     false, // Strict mode
