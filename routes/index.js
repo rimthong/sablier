@@ -25,7 +25,7 @@ var extensions = [new openid.UserInterface(),
                         "http://axschema.org/namePerson/last": "required"
                       })];
 var relyingParty = new openid.RelyingParty(
-    'http://sablier.herokuapp.com:3000/', // Verification URL (yours)
+    'http://sablier.herokuapp.com/', // Verification URL (yours)
     null, // Realm (optional, specifies realm for OpenID authentication)
     false, // Use stateless verification
     false, // Strict mode
@@ -118,11 +118,11 @@ exports.addActivity = function(req,res){
       var timespent = 0;
 
       //Locate time hints
-      var hourspat = /(\d) hour[s]?/;
-      var timeMatches = req.body.activity.match(hourspat);
+      var hourspat = /(\d+\.?\d+) hour[s]?/;
+      var hoursMatches = req.body.activity.match(hourspat);
       var time = 0;
 
-      if(timeMatches != null){
+      if(hoursMatches != null){
         time+=timeMatches[1];
       }
 
