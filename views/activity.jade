@@ -5,41 +5,73 @@ script
     $("#grid").data("kendoGrid").dataSource.read(); 
     return false;
   }
-  function removeActivity(docid){
-    $.post("/activity", { _method: 'delete', activity: docid});
-    $("#grid").data("kendoGrid").refresh();
-    $("#grid").data("kendoGrid").dataSource.read(); 
-    $("#grid").data("kendoGrid").refresh();
-  }
 
-  function readyGrid(){
-    $("#grid").kendoGrid({
-      columns: [
-        {field:"date", title:"date"},
-        {field:"activity", title:"activity"},
-        {field:"hours", title:"time spent (h)"},
-        {field:"_id", title:"operation"}
-      ],
-      dataSource: {
-        transport: {
-          read: {
-            url: '/activity',
-            contentType: 'application/json; charset=utf-8',
-            type: 'GET',
-            cache: false,
-            dataType: 'json'
-          }
-        }
-      },
-      rowTemplate: kendo.template($("#rowTemplate").html()),
-      altRowTemplate: kendo.template($("#altRowTemplate").html()),
-      sortable: true
+script
+  $(function(){
+    var selectedActivity;
+    
+    var activityModel = kendo.data.Model.define({
+      id: "_id",
+      fields: {
+        _id : {type:"string", editable:false},
+        date: {type:"string"},
+        activity : {type:"string"},
+        hours : {type:"number"}
+      }
     });
 
-  }
+    dataSource = new kendo.data.DataSource({
+      transport: {
+        read: {
+          url: '/activity',
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json'
+        },
+        destroy: {
+          url: '/activity',
+          type: 'DELETE',
+          dataType: 'json'
+        },
+        update: {
+          url: '/activity',
+          type: 'PUT',
+          dataType: 'json'
+        },
+      },
+      schema:{
+        model: activityModel
+      }
+    });
 
-  $(document).ready(function(){
-    readyGrid();
+    $("#grid").kendoGrid({
+      dataSource: dataSource,
+      sortable: true,
+      selectable: true,
+      rowTemplate: kendo.template($("#rowTemplate").html()),
+      altRowTemplate: kendo.template($("#altRowTemplate").html()),
+      columns: [
+        {field:"_id", title:"id"},
+        {field:"date", title:"date"},
+        {field:"activity", title:"activity"},
+        {field:"hours", title:"hours"}
+      ],
+      change: function(){
+        selectedId = this.select()[0].id
+        selectedActivity = this.dataSource.get(selectedId);
+      },
+      editable: true
+    });
+
+    $("#delete").click(function(){
+      dataSource.remove(selectedActivity);
+      dataSource.sync();
+    });
+
+    $("#save").click(function(){
+      dataSource.sync();
+      console.log("Attempting to synchronize");
+    });
   });
 
 script(src="/javascripts/kendo.all.min.js")
@@ -52,18 +84,18 @@ h1 Log
 table#grid
   tbody
     tr
-      td(colspan=3)
+      td(colspan=4)
 script#rowTemplate(type="text/x-kendo-tmpl")
-  tr
+  tr(id="${_id}", data-id="${_id}")
+    td ${_id}
     td ${date}
     td ${activity}
     td ${hours}
-    td
-      button(onclick="removeActivity(\"${_id}\");") remove
 script#altRowTemplate(type="text/x-kendo-tmpl")
-  tr(class="k-alt")
+  tr(class="k-alt", id="${_id}", data-id="${_id}")
+    td ${_id}
     td ${date}
     td ${activity}
     td ${hours}
-    td
-      button(onclick="removeActivity(\"${_id}\");") remove
+button#delete remove
+button#save save changes

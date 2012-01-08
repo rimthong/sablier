@@ -25,7 +25,7 @@ var extensions = [new openid.UserInterface(),
                         "http://axschema.org/namePerson/last": "required"
                       })];
 var relyingParty = new openid.RelyingParty(
-    'http://localhost:3000/', // Verification URL (yours)
+    'http://sablier.herokuapp.com:3000/', // Verification URL (yours)
     null, // Realm (optional, specifies realm for OpenID authentication)
     false, // Use stateless verification
     false, // Strict mode
@@ -42,6 +42,26 @@ exports.activity = function(req, res){
       res.render('activity', {title:'Add Activity'});
     }
   });
+};
+
+exports.updateActivity = function(req,res){
+  if(!user){
+    console.log('update activity auth failed, error:'+JSON.stringify(error));
+    res.render('login', {title: 'Authentication Failed'});
+  } else {
+    Activity.findOne({_id:req.body._id},function(err, activity) {
+      if(activity){
+        // do your updates here
+        activity.hours = req.body.hours;
+        activity.activity = req.body.activity;
+        activity.date = req.body.date;
+
+        activity.save(function(err) {
+        });
+      }
+    });
+    res.send('ok');
+  }
 };
 
 exports.listActivities = function(req,res){
@@ -73,10 +93,10 @@ exports.authenticate = function(req,res){
 
 exports.deleteActivity = function(req,res){
   if(!user){
-    console.log('add activity auth failed, error:'+JSON.stringify(error));
+    console.log('delete activity auth failed, error:'+JSON.stringify(error));
     res.render('login', {title: 'Authentication Failed'});
   } else {
-    Activity.findOne({_id:req.body.activity},function(err, activity) {
+    Activity.findOne({_id:req.body._id},function(err, activity) {
       console.log('deleteing activity:'+JSON.stringify(activity))
       activity.remove();
     });
