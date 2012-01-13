@@ -118,7 +118,7 @@ exports.addActivity = function(req,res){
       var timespent = 0;
 
       //Locate time hints
-      var hourspat = /(\d+\.?\d+) hour[s]?/;
+      var hourspat = /(\d?\.?\d+) hour[s]?/;
       var hoursMatches = req.body.activity.match(hourspat);
       var time = 0;
 
