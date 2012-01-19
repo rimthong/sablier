@@ -34,7 +34,6 @@ var relyingParty = new openid.RelyingParty(
 exports.activity = function(req, res){
   relyingParty.verifyAssertion(req, function(error, result){
     if(error){
-      console.log('auth failed activity, error:'+JSON.stringify(error));
       res.render('login', {title: 'Please Provide Authentication'});
     } else {
       user = result;
@@ -46,7 +45,6 @@ exports.activity = function(req, res){
 
 exports.updateActivity = function(req,res){
   if(!user){
-    console.log('update activity auth failed, error:'+JSON.stringify(error));
     res.render('login', {title: 'Authentication Failed'});
   } else {
     Activity.findOne({_id:req.body._id},function(err, activity) {
@@ -55,6 +53,7 @@ exports.updateActivity = function(req,res){
         activity.hours = req.body.hours;
         activity.activity = req.body.activity;
         activity.date = req.body.date;
+        activity.tags = req.body.tags.split(",")
 
         activity.save(function(err) {
         });
@@ -66,13 +65,32 @@ exports.updateActivity = function(req,res){
 
 exports.listActivities = function(req,res){
    if(!user){
-    console.log('auth failed list activities, error:'+JSON.stringify(error));
     res.render('login', {title: 'Authentication Failed'});
   } else {
     console.log('auth list activities achieved, result:'+JSON.stringify(user));
     Activity.find({user:user.email}).sort('date',-1).execFind(function(err, activities){
       res.send(activities);
     });
+  }
+};
+
+exports.listFilteredActivities = function(req,res){
+   if(!user){
+    res.render('login', {title: 'Authentication Failed'});
+  } else {
+    console.log('filtered activities, tags:#'+req.params.tags);
+    //TODO support AND and OR see advanced queries
+    Activity.find({user:user.email, tags:'#'+req.params.tags}).sort('date',-1).execFind(function(err, activities){
+      res.send(activities);
+    });
+  }
+};
+
+exports.reportFilteredActivities = function(req,res){
+   if(!user){
+    res.render('login', {title: 'Authentication Failed'});
+  } else {
+      res.render('report', {title:'Report', tags: req.params.tags});
   }
 };
 
@@ -93,7 +111,6 @@ exports.authenticate = function(req,res){
 
 exports.deleteActivity = function(req,res){
   if(!user){
-    console.log('delete activity auth failed, error:'+JSON.stringify(error));
     res.render('login', {title: 'Authentication Failed'});
   } else {
     Activity.findOne({_id:req.body._id},function(err, activity) {
@@ -107,7 +124,6 @@ exports.deleteActivity = function(req,res){
 exports.addActivity = function(req,res){
   //Parse string
     if(!user){
-      console.log('add activity auth failed, error:'+JSON.stringify(error));
       res.render('login', {title: 'Authentication Failed'});
     } else {
       console.log('add activity auth achieved, result:'+JSON.stringify(user));
@@ -123,7 +139,7 @@ exports.addActivity = function(req,res){
       var time = 0;
 
       if(hoursMatches != null){
-        time+=timeMatches[1];
+        time+=hoursMatches[1];
       }
 
       new Activity({activity: req.body.activity, user:user.email, tags: tagMatches, hours:time}).save();

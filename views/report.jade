@@ -1,0 +1,42 @@
+
+script
+  $(function(){
+    var selectedActivity;
+    var activityModel = kendo.data.Model.define({
+      id: "_id",
+      fields: {
+        _id : {type:"string", editable:false},
+        date: {type:"string"},
+        activity : {type:"string"},
+        hours : {type:"number"}
+      }
+    });
+
+    dataSource = new kendo.data.DataSource({
+      transport: {
+        read: {
+          url: '/activity/tags/'+document.getElementById('tags').innerHTML,
+            contentType: 'application/json; charset=utf-8',
+            type: 'GET',
+            dataType: 'json'
+        }
+      },
+      schema:{
+        model: activityModel
+      }
+    });
+
+    $("#grid").kendoGrid({
+      dataSource: dataSource,
+      sortable: true,
+      columns: [
+        {field:"date", title:"date"},
+        {field:"activity", title:"activity"},
+        {field:"hours", title:"hours"}
+      ]
+    });
+  });
+
+script(src="/javascripts/kendo.all.min.js")
+h1#tags=tags
+div#grid

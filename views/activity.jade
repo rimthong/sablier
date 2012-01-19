@@ -5,9 +5,13 @@ script
     $("#grid").data("kendoGrid").dataSource.read(); 
     return false;
   }
+  function setTags(){
+    document.getElementById('tagList').innerHTML="<a href='reports/tags/sablier'>sablier</a> <a href='reports/tags/fdaq'>fdaq</a>";
+  }
 
 script
   $(function(){
+    setTags();
     var selectedActivity;
     
     var activityModel = kendo.data.Model.define({
@@ -16,6 +20,7 @@ script
         _id : {type:"string", editable:false},
         date: {type:"string"},
         activity : {type:"string"},
+        tags: {stype:"string"},
         hours : {type:"number"}
       }
     });
@@ -53,7 +58,8 @@ script
       columns: [
         {field:"date", title:"date"},
         {field:"activity", title:"activity"},
-        {field:"hours", title:"hours"}
+        {field:"hours", title:"hours"},
+        {field:"tags", title:"tags"}
       ],
       change: function(){
         selectedId = this.select()[0].id
@@ -89,10 +95,14 @@ script#rowTemplate(type="text/x-kendo-tmpl")
     td ${date}
     td ${activity}
     td ${hours}
+    td ${tags}
 script#altRowTemplate(type="text/x-kendo-tmpl")
   tr(class="k-alt", id="${_id}", data-id="${_id}")
     td ${date}
     td ${activity}
     td ${hours}
+    td ${tags}
 button#delete remove
 button#save save changes
+h1 tags
+div#tagList
