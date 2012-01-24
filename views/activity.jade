@@ -6,12 +6,21 @@ script
     return false;
   }
   function setTags(){
-    document.getElementById('tagList').innerHTML="<a href='reports/tags/sablier'>sablier</a> <a href='reports/tags/fdaq'>fdaq</a>";
+    tags = $.get("/tags", function(tags){
+      console.log("tagobj:"+JSON.stringify(tags))
+        taglist = ""
+        for(tag in tags){
+          if(tags[tag]!=null){
+            sanitizedTag = tags[tag].substring(1);
+            taglist += "<a href='reports/tags/"+sanitizedTag+"'>"+sanitizedTag+"</a> "
+          }
+        }
+      document.getElementById('tagList').innerHTML=taglist;
+    });
   }
 
 script
   $(function(){
-    setTags();
     var selectedActivity;
     
     var activityModel = kendo.data.Model.define({
@@ -77,6 +86,10 @@ script
       dataSource.sync();
       console.log("Attempting to synchronize");
     });
+
+   
+    setTags(dataSource);
+
   });
 
 script(src="/javascripts/kendo.all.min.js")

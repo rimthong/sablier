@@ -21,7 +21,7 @@ var extensions = [new openid.UserInterface(),
                   new openid.AttributeExchange(
                       {
                         "http://axschema.org/contact/email": "required",
-                        "http://axschema.org/namePerson/first": "required",
+                       "http://axschema.org/namePerson/first": "required",
                         "http://axschema.org/namePerson/last": "required"
                       })];
 var relyingParty = new openid.RelyingParty(
@@ -70,6 +70,18 @@ exports.listActivities = function(req,res){
     console.log('auth list activities achieved, result:'+JSON.stringify(user));
     Activity.find({user:user.email}).sort('date',-1).execFind(function(err, activities){
       res.send(activities);
+    });
+  }
+};
+
+
+exports.listTags = function(req,res){
+   if(!user){
+    res.render('login', {title: 'Authentication Failed'});
+  } else {
+    console.log('auth list activities achieved, result:'+JSON.stringify(user));
+    Activity.collection.distinct('tags', function(error, tags){
+        res.send(tags);
     });
   }
 };

@@ -44,6 +44,9 @@ app.delete('/activities', routes.deleteActivity);
 app.get('/activity', routes.listActivities);
 app.get('/activities', routes.listActivities);
 
+app.get('/tag', routes.listTags);
+app.get('/tags', routes.listTags);
+
 app.get('/activity/tags/:tags', routes.listFilteredActivities);
 app.get('/activities/tags/:tags', routes.listFilteredActivities);
 
