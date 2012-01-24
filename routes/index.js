@@ -150,6 +150,12 @@ exports.addActivity = function(req,res){
       var hoursMatches = req.body.activity.match(hourspat);
       var time = 0;
 
+      if(hoursMatches == null){
+        //try in french instead
+        hourspat = /(\d?\.?\d+) heure[s]?/;
+        hoursMatches = req.body.activity.match(hourspat);
+      }
+
       if(hoursMatches != null){
         time+=hoursMatches[1];
       }
