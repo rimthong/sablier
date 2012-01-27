@@ -40,8 +40,7 @@ exports.updateActivity = function(req,res){
     var tags = [];
     if(req.body.tags){
       var tagstring = req.body.tags;
-      console.log("updating tags:"+tagstring);
-      tags = tagstring.split(",");
+      tags = $.map(tagstring.split(","), $.trim);
     }
     Activity.findOne({_id:req.body._id},function(err, activity) {
       if(activity){
@@ -88,7 +87,7 @@ exports.listFilteredActivities = function(req,res){
   } else {
     console.log('filtered activities, tags:#'+req.params.tags);
     //TODO support AND and OR see advanced queries
-    Activity.find({user:user.email, tags:'#'+req.params.tags}).sort('date',-1).execFind(function(err, activities){
+    Activity.find({user:user.email, tags:'#'+$.trim(req.params.tags)}).sort('date',-1).execFind(function(err, activities){
       res.send(activities);
     });
   }
