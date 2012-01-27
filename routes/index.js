@@ -15,7 +15,7 @@ var extensions = [new openid.UserInterface(),
                         "http://axschema.org/contact/email": "required"
                       })];
 var relyingParty = new openid.RelyingParty(
-    'http://sablier.herokuapp.com:3000/', // Verification URL (yours)
+    'http://sablier.herokuapp.com/', // Verification URL (yours)
     null, // Realm (optional, specifies realm for OpenID authentication)
     false, // Use stateless verification
     false, // Strict mode
