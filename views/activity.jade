@@ -55,13 +55,15 @@ script
       },
       schema:{
         model: activityModel
-      }
+      },
+      pageSize: 10
     });
 
     $("#grid").kendoGrid({
       dataSource: dataSource,
       sortable: true,
       selectable: true,
+      pageable: true,
       rowTemplate: kendo.template($("#rowTemplate").html()),
       altRowTemplate: kendo.template($("#altRowTemplate").html()),
       columns: [

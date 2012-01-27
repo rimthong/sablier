@@ -4,9 +4,11 @@ body {
   background: #1B1C1F;
 }
 
-a {
-  color: #00B7FF;
-}
+a:link {color:#1B1C1F ;text-decoration: none}
+a:visited {color:#1B1C1F ;text-decoration: none}
+a:active {color:#1B1C1F ;text-decoration: none}
+a:hover {color:#1B1C1F ;text-decoration: underline; color: red;}
+
 div#header{
   color:#EEE;
   font: 14px "Monaco";
@@ -15,8 +17,8 @@ div#header{
 }
 
 div#content{
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-left: 10%;
+  margin-right: 10%;
   padding:45px;
   background: #CCC;
 }

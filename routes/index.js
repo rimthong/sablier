@@ -8,24 +8,14 @@ var Activity = require('../models/activity.js');
 var extensions = [new openid.UserInterface(), 
                   new openid.SimpleRegistration(
                       {
-                        "nickname" : true, 
-                        "email" : true, 
-                        "fullname" : true,
-                        "dob" : true, 
-                        "gender" : true, 
-                        "postcode" : true,
-                        "country" : true, 
-                        "language" : true, 
-                        "timezone" : true
+                        "email" : true
                       }),
                   new openid.AttributeExchange(
                       {
-                        "http://axschema.org/contact/email": "required",
-                       "http://axschema.org/namePerson/first": "required",
-                        "http://axschema.org/namePerson/last": "required"
+                        "http://axschema.org/contact/email": "required"
                       })];
 var relyingParty = new openid.RelyingParty(
-    'http://sablier.herokuapp.com/', // Verification URL (yours)
+    'http://sablier.herokuapp.com:3000/', // Verification URL (yours)
     null, // Realm (optional, specifies realm for OpenID authentication)
     false, // Use stateless verification
     false, // Strict mode
@@ -47,13 +37,19 @@ exports.updateActivity = function(req,res){
   if(!user){
     res.render('login', {title: 'Authentication Failed'});
   } else {
+    var tags = [];
+    if(req.body.tags){
+      var tagstring = req.body.tags;
+      console.log("updating tags:"+tagstring);
+      tags = tagstring.split(",");
+    }
     Activity.findOne({_id:req.body._id},function(err, activity) {
       if(activity){
         // do your updates here
         activity.hours = req.body.hours;
         activity.activity = req.body.activity;
         activity.date = req.body.date;
-        activity.tags = req.body.tags.split(",")
+        activity.tags = tags;
 
         activity.save(function(err) {
         });

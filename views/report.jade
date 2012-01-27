@@ -23,12 +23,14 @@ script
       },
       schema:{
         model: activityModel
-      }
+      },
+      pageSize: 10
     });
 
     $("#grid").kendoGrid({
       dataSource: dataSource,
       sortable: true,
+      pageable: true,
       columns: [
         {field:"date", title:"date"},
         {field:"activity", title:"activity"},
