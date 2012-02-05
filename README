@@ -1,8 +1,9 @@
 Sablier
-------
+---------
 Simple twitter-like time keeper. 
 
 Todo
------
-  Google Auth
-  Data exporters
+---------
+- Data exporters
+- Chronometer
+- Countdown

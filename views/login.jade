@@ -2,8 +2,21 @@ h1 Authentication required
 form(method="get", action="/authenticate")
   input(type="hidden", name="openid_identifier", value="http://www.google.com/accounts/o8/id")
   input(type="submit", value="Login using google")
-h1 Welcome to Sablier
-p Sablier is a simple time tracker built to scratch an immediate itch. Once logged in, just enter what you're working on in the input box, using # to tag things, and "n hours" to specify the time spent. 
-p More user-friendly time parsing is to come, as well as utilities to export data for your time sheets. 
-p Update: Now supports delete, edit operations. Delete is auto-synced but edit requires pressing the save button.
-p Update: Added tag filtering, but only one tag at a time for now.
+h1 Welcome to sablier alpha
+p Sablier is a simple time tracker built to scratch an immediate itch. Once logged in, just enter what you're working on in the input box, using # to tag things, and "n hours" to specify the time spent.
+div#video
+  iframe(src="http://www.youtube.com/embed/oHg5SJYRHA0", height="315", width="420", frameborder=0)
+h1 News
+ul
+  li Opening alpha to the public for feedback.  
+  li Rewrote routes with underscore.js
+  li Added filtering by tags, french time parsing. (N heures)
+h1 Helping out
+p 
+  | If you would like to help out, feel free to either check out the code on 
+  a(href="http://github.com/bushibytes/sablier")
+    |github
+  | or follow the developpment on 
+  a(href="https://trello.com/board/sablier/")
+    |Trello
+  |(you can suggest new features and vote up the ones you would like implemented first). If you'd rather, you can send all bug reports and feature requests to rimthong@gmail.com, that works too!
