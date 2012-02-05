@@ -3,6 +3,7 @@ script
     $.post("/activity", { activity: document.getElementById('activity').value } );
     document.getElementById('activity').value = "";
     $("#grid").data("kendoGrid").dataSource.read(); 
+    setTags();
     return false;
   }
   function setTags(){
@@ -11,7 +12,7 @@ script
         taglist = ""
         for(tag in tags){
           if(tags[tag]!=null){
-            sanitizedTag = tags[tag].substring(1);
+            sanitizedTag = tags[tag];
             taglist += "<a href='reports/tags/"+sanitizedTag+"'>"+sanitizedTag+"</a> "
           }
         }
