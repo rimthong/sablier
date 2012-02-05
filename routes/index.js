@@ -82,7 +82,7 @@ exports.listTags = function(req,res){
     res.render('login', {title: 'Authentication Failed'});
   } else {
     console.log('auth list activities achieved, result:'+JSON.stringify(user));
-    Activity.collection.distinct('tags', function(error, tags){
+    Activity.collection.distinct('tags', {user:user.email},function(error, tags){
         res.send(tags);
     });
   }
