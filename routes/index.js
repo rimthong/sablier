@@ -48,7 +48,7 @@ exports.updateActivity = function(req,res){
     var tags = [];
     if(req.body.tags){
       var tagstring = req.body.tags;
-      tags = _.map(tagstring.split(","), function(tag){ return _.trim(tag," #"); });
+      tags = _.map(tagstring.toString().split(","), function(tag){ return _.trim(tag," #"); });
     }
     Activity.findOne({_id:req.body._id},function(err, activity) {
       if(activity){
